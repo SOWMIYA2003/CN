@@ -2,13 +2,24 @@
 
 
 # Write a program to implement the STOP AND WAIT PROTOCOL
+### SERVER
+```
+
+```
+### CLIENT
 ```
 
 ```
 # Write a program to implement the PING COMMAND
+### SERVER
 ```
 
 ```
+### CLIENT
+```
+
+```
+
 # -------------------------------------------------------------
 # Write a program to implement the SLIDING WINDOW PROTOCOL
 ```
