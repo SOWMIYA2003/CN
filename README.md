@@ -61,15 +61,40 @@ while True:
 # Write a program to implement the SLIDING WINDOW PROTOCOL
 ### SERVER
 ```
-
+import socket
+s=socket.socket()
+s.bind(('localhost',8002))
+s.listen(5)
+c,addr=s.accept()
+n=int(input("Enter the number of frames to be sent : "))
+l=list(range(n))
+size=int(input("Enter the Window Size : "))
+st=0
+i=0
+while True:
+    while i<len(l):
+        st+=size
+        c.send(str(l[i:st]).encode())
+        ack=c.recv(1024).decode()
+        if ack:
+            print(ack)
+            i+=size
 ```
 ### CLIENT
 ```
-
+import socket
+s=socket.socket()
+s.connect(('localhost',8002))
+while True:
+    print(s.recv(1024).decode())
+    s.send("Acknowledgement Received".encode())
 ```
 # Write a program to implement the TRACEROUTE COMMAND
 ```
-
+from scapy.all import*
+target=[www.google.com]
+result,unans=traceroute(target,maxttl=32)
+print(result,unans)
 ```
 # -------------------------------------------------------------
 # Write a program to implement the ECHO CLIENT-SERVER APPLICATION USING TCP SOCKETS 
