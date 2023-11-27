@@ -198,20 +198,79 @@ while True:
 ```
 # -------------------------------------------------------------
 # Write a program to implement the FILE TRANSFER APPLICATION USING TCP SOCKETS
+### TEXT FILE
+```
+RANDON TEXT
+```
 ### SERVER
 ```
-
+import socket 
+port = 60000 
+s = socket.socket() 
+host = socket.gethostname() 
+s.bind((host, port)) 
+s.listen(5) 
+while True:
+    conn, addr = s.accept() 
+    data = conn.recv(1024)
+    print('Server received', repr(data))
+    filename='mytext.txt'
+    f = open(filename,'rb')
+    l = f.read(1024)
+    while (l):
+        conn.send(l)
+        print('Sent ',repr(l))
+        l = f.read(1024)
+    f.close()
+    print('Done sending')
+    conn.send('Thank you for connecting'.encode())
+    conn.close()
 ```
 ### CLIENT
 ```
+import socket
+s = socket.socket()
+host = socket.gethostname()
+port = 60000
+s.connect((host, port))
+s.send("Hello server!".encode())
+with open('received_file', 'wb') as f:
+    while True:
+        print('receiving data...')
+        data = s.recv(1024)
+        print('data=%s', (data))
+        if not data:
+            break
+        f.write(data)
+f.close()
+print('Successfully get the file')
+s.close()
+print('connection closed')
 
 ```
 # Write a program to perform SOCKET PROGRAMMING with CLIENT-SERVER MODEL
 ### SERVER
 ```
-
+import socket
+from datetime import datetime
+s=socket.socket()
+s.bind(('localhost',8008))
+s.listen(5)
+c,addr=s.accept()
+print("Address : ",addr)
+now=datetime.now()
+c.send(now.strftime('%d/%m/%Y %H:%M:%S').encode())
+ack=c.recv(1024).decode()
+if ack:
+    print (ack)
+c.close()
 ```
 ### CLIENT
 ```
-
+import socket
+s=socket.socket()
+s.connect(('localhost',8008))
+print(s.getsockname())
+print(s.recv(1024).decode())
+print("Acknowledgemnet Received".encode())
 ```
