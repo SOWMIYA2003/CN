@@ -100,39 +100,101 @@ print(result,unans)
 # Write a program to implement the ECHO CLIENT-SERVER APPLICATION USING TCP SOCKETS 
 ### SERVER
 ```
-
+import socket
+s=socket.socket()
+s.bind(('localhost',8004))
+s.listen(5)
+c,addr=s.accept()
+while True:
+    ClientMessage=c.recv(1024).decode()
+    c.send(ClientMessage.encode())
 ```
 ### CLIENT
 ```
-
+import socket
+s=socket.socket()
+s.connect(('localhost',8004))
+while True:
+    ip=input("Client - > ")
+    s.send(ip.encode())
+    print("Server - > ",s.recv(1024).decode())
 ```
 # Write a program to implement the ADDRESS RESOLUTION PROTOCOL (ARP)
 ### SERVER
 ```
-
+import socket
+s=socket.socket()
+s.bind(('localhost',8005))
+s.listen(5)
+c,addr=s.accept()
+address={'165.165.80.80':'8A:6C:07:EF','165.165.01.79':'AA:BB:CF:ED'}
+while True:
+    ip=c.recv(1024).decode()
+    try:
+        c.send(address[ip].encode())
+    except KeyError:
+        c.send("Not Found".encode())
 ```
 ### CLIENT
 ```
-
+import socket
+s=socket.socket()
+s.connect(('localhost',8005))
+while True:
+    ip=input("Enter logical address : ")
+    s.send(ip.encode())
+    print("Mac Address : ",s.recv(1024).decode())
 ```
 # -------------------------------------------------------------
 # Write a program to implement the CHAT APPLICATION USING TCP SOCKETS 
 ### SERVER
 ```
-
+import socket
+s=socket.socket()
+s.bind(('localhost',8007))
+s.listen(5)
+c,addr=s.accept()
+while True:
+    ClientMessage=c.recv(1024).decode()
+    print("Client - > ",ClientMessage)
+    msg=input("Server - > ")
+    c.send(msg.encode())
 ```
 ### CLIENT
 ```
-
+import socket
+s=socket.socket()
+s.connect(('localhost',8007))
+while True:
+    ip=input("Client - > ")
+    s.send(ip.encode())
+    print("Server - > ",s.recv(1024).decode())
 ```
 # Write a program to implement the REVERSE ADDRESS RESOLUTON PROTOCOL (RARP)
 ### SERVER
 ```
-
+import socket
+s=socket.socket()
+s.bind(('localhost',8006))
+s.listen(5)
+c,addr=s.accept()
+address={'8A:6C:07:EF':'195.195.60.60','AA:BB:CF:ED':'192.192.79.01'}
+while True:
+    ip=c.recv(1024).decode()
+    try:
+        c.send(address[ip].encode())
+    except KeyError:
+        c.send("Not Found".encode())
 ```
 ### CLIENT
 ```
-
+import socket
+s=socket.socket()
+s.connect(('localhost',8006))
+while True:
+    ip=input("Enter Mac Address : ")
+    s.send(ip.encode())
+    print("Logical Address : ",s.recv(1024).decode())
 ```
 # -------------------------------------------------------------
 # Write a program to implement the FILE TRANSFER APPLICATION USING TCP SOCKETS
